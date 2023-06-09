@@ -28,6 +28,10 @@
           3. If unsuccessful user will be notified and account will be blocked}
 \end{frame}
 \begin{frame}
+    \frametitle{Tech Stack}
+        {- Python(plyer library) \newline - Django(Backend) \newline - Jinja2 (Templating) \newline - OpenCV (image processing library) \newline - Crypto library \newline - API development for Django REST Framework( for request handling)}
+\end{frame}
+\begin{frame}
     \begin{columns}[T]
     \begin{column}{10cm}
         {\LARGE Thankyou}
