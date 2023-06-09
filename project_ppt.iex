@@ -16,4 +16,22 @@
     \end{column}
     \end{columns}
 \end{frame}
+\begin{frame}
+    \frametitle{Signing up}
+         \indent{1. Store 10 running signatures as input and encrypt them \\
+         2. After encryption the encoded form in database will be stored.}
+\end{frame}
+\begin{frame}
+    \frametitle{Loging in}
+         \indent{1.Three tries will be given for getting any matching signature\\
+          2. User will be notified on successful authentication \\
+          3. If unsuccessful user will be notified and account will be blocked}
+\end{frame}
+\begin{frame}
+    \begin{columns}[T]
+    \begin{column}{10cm}
+        {\LARGE Thankyou}
+    \end{column}
+    \end{columns}
+\end{frame}
 \end{document}
