@@ -1,0 +1,19 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usetheme{Dresden}
+\usecolortheme{lily}
+\title{Signature Authentication System}
+\author{Udita \newline Shreya \newline Aastha \newline Abhisatwika }
+\institute{WE Cohort V}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{frame}
+    \frametitle{Problem Statement}
+    \begin{columns}[T]
+    \begin{column}{7cm}
+        Developing a signature Authentication and Encryption Service which allows physical signatures to be used as a digital medium of Signing-in in Websites.
+    \end{column}
+    \end{columns}
+\end{frame}
+\end{document}
