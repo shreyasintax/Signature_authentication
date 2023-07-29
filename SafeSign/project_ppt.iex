@@ -1,0 +1,41 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usetheme{Dresden}
+\usecolortheme{lily}
+\title{Signature Authentication System}
+\author{Udita \newline Shreya \newline Aastha \newline Abhisatwika }
+\institute{WE Cohort V}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{frame}
+    \frametitle{Problem Statement}
+    \begin{columns}[T]
+    \begin{column}{7cm}
+        Developing a signature Authentication and Encryption Service which allows physical signatures to be used as a digital medium of Signing-in in Websites.
+    \end{column}
+    \end{columns}
+\end{frame}
+\begin{frame}
+    \frametitle{Signing up}
+         \indent{1. Store 10 running signatures as input and encrypt them \\
+         2. After encryption the encoded form in database will be stored.}
+\end{frame}
+\begin{frame}
+    \frametitle{Loging in}
+         \indent{1.Three tries will be given for getting any matching signature\\
+          2. User will be notified on successful authentication \\
+          3. If unsuccessful user will be notified and account will be blocked}
+\end{frame}
+\begin{frame}
+    \frametitle{Tech Stack}
+        {- Python(plyer library) \newline - Django(Backend) \newline - Jinja2 (Templating) \newline - OpenCV (image processing library) \newline - Crypto library \newline - API development for Django REST Framework( for request handling)}
+\end{frame}
+\begin{frame}
+    \begin{columns}[T]
+    \begin{column}{10cm}
+        {\LARGE Thankyou}
+    \end{column}
+    \end{columns}
+\end{frame}
+\end{document}

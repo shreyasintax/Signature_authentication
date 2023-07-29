@@ -1,0 +1,16 @@
+<html>
+    <body>
+        <h2>sign in using password</h2>
+
+        <form action = '/signin_pass' method="post">
+        {% csrf_token %}
+            <label for = ''>Username</label>
+            <input type = 'text' id = 'username' name='username' placeholder='enter username'required>
+            <br>
+            <label for = ''>password</label>
+            <input type = 'password' id = 'password' name='password' placeholder='enter password'>
+            <br>
+
+            <button type="submit">Submit</button>
+    </body>
+</html>

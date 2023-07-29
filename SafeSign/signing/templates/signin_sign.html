@@ -1,0 +1,16 @@
+<html>
+    <body>
+        <h2>sign in using signature</h2>
+
+        <form action = '/signin_sign' method="post">
+        {% csrf_token %}
+            <label for = ''>Username</label>
+            <input type = 'text' id = 'username' name='username' placeholder='enter username'required>
+            <br>
+            <label for = ''>signatures</label>
+            <input type = 'file' id = 'sign1' name='sign1..10' placeholder='upload signature'>
+            <br>
+
+            <button type="submit">Submit</button>
+    </body>
+</html>
