@@ -1,0 +1,73 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usetheme{Warsaw}
+\usecolortheme{lily}
+\title{{SafeSign}}
+\author{Udita \newline
+        Shreya \newline
+        Aastha \newline
+        Abhisatwika}
+\institute{WE Cohort V}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{frame}
+    \frametitle{Problem Statement}
+       \ding{111}  Traditional handwritten signatures are susceptible to forgery and unauthorized usage, posing significant challenges to reliable authentication methods. Users face the following issues:\\
+       \ding{32}  \\
+       \ding{43}  Security Vulnerabilities\\
+       \ding{43}  Lack of Control once signature shared\\
+       \ding{43}  Subjectivity in Verification\\
+       \ding{43}  Inconvenience and Inefficiency
+\end{frame}
+
+\begin{frame}
+    \frametitle{Objective}
+        \ding{111}  Our signature verification and encryption service offers a comprehensive solution to address the above challenges by leveraging modern technologies\\
+        \ding{32}  \\ 
+        \ding{43}  Secure Signature Storage\\
+        \ding{43}  Robust Signature Verification Algorithms\\
+        \ding{43}  Real-time Unauthorized Usage Detection Alerts\\
+        \ding{43}  Seamless Integration via well-documented API\\
+        \ding{43}  Enhanced User Experience
+\end{frame}
+
+\begin{frame}
+    \frametitle{Project Task Allocation}
+     \ding{111} Backend Development:\\
+     \ding{43} Shreya: Responsible for implementing the image verification and encryption algorithm\\
+     \ding{43} Udita: In charge of developing the email notification functionality\\
+     \ding{32} \\
+     \ding{111} Frontend Development:\\
+     \ding{43} Aastha: Tasked with designing and developing the frontend of the application\\
+     \ding{32} \\
+     \ding{111} Testing and Deployment:\\
+     \ding{43} Abhisatwika: Responsible for conducting thorough testing of the application and ensuring its smooth deployment
+\end{frame}
+\begin{frame}
+    \frametitle{Tech Stack}
+      \ding{43} Backend: Python, Django, Django REST Framework, Django ORM, Django ImageField, Django Forms, Django Authentication System, NumPy, scikit-image (skimage)\\
+      \ding{43} Notifications: Plyer\\
+      \ding{43} Database: SQLite\\
+      \ding{43} Frontend: Django Templates, JavaScript, Bootstrap or Tailwind CSS\\
+      \ding{43} Deployment: Docker\\
+      \ding{43} Other Tools and Technologies: Git, Pytest or Django’s built-in testing framework
+
+\end{frame}
+\begin{frame}
+    \frametitle{Future scope}
+      \ding{43} API Enhancements and Developer Resources\\
+      \ding{43} SDKs and Client Libraries for Easy Integration\\
+      \ding{43} Third-Party Integrations with Popular Web Services\\
+      \ding{43} Performance Optimization for Scalability\\
+      \ding{43} Compliance with Signature Verification Standards\\
+      \ding{43} Thriving Developer Community for Collaboratio\\
+      \ding{43} Taking Digital Signature Inputs
+\end{frame}
+\begin{frame}
+ \begin{tabular}{c}
+        \huge Any questions?\end{tabular}
+\end{frame}
+\end{document}
