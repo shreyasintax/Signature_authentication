@@ -9,6 +9,12 @@ from django.core.mail import send_mail
 def home(request):
     return render(request, 'homepage.html')
 
+def about(request):
+    return render(request, 'about.html')
+
+def clientsite(request):
+    return render(request, 'clientsite.html')
+
 def signup(request):
     if request.method == "POST":
         username = request.POST.get('username')
