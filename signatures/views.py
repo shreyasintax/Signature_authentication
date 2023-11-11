@@ -1,12 +1,12 @@
 # In signatures/views.py
-import json
+'''import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import User, SignatureSample
-import cv2
-import numpy as np
+import cv2'''
+'''import numpy as np
 from skimage.metrics import structural_similarity as ssim
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -19,6 +19,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.core.files.uploadedfile import InMemoryUploadedFile
+import imghdr
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from .models import User, SignatureSample
+import cv2
+import numpy as np
+from skimage.metrics import structural_similarity as ssim
+import numpy as np
+from django.http import JsonResponse
+from django.contrib.auth import authenticate, login
+from .models import User, SignatureSample
 
 
 @api_view(['POST'])
@@ -100,6 +111,8 @@ def encrypt_signature(request):
 
 @api_view(['GET', 'POST'])
 @csrf_exempt
+
+
 def user_registration(request):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
@@ -110,52 +123,31 @@ def user_registration(request):
             # Create a new user with the provided user ID
             user, created = User.objects.get_or_create(user_id=user_id)
 
-            # Save the 10 signature samples for the user
-            for i, signature_sample in enumerate(signature_samples, start=1):
-                SignatureSample.objects.create(user=user, signature_image=signature_sample)
+            # Validate and process signature samples
+            try:
+                processed_samples = []
+                for signature_sample in signature_samples:
+                    content_type = signature_sample.content_type
+                    if content_type.startswith('image/'):
+                        if imghdr.what(None, h=signature_sample.read()) is not None:
+                            processed_samples.append(signature_sample)
 
-            # Fetch the samples again after saving them to the database
-            samples = user.signaturesample_set.all()
+                if len(processed_samples) != len(signature_samples):
+                    return JsonResponse({'error': 'Invalid image files'}, status=400)
 
-            # Define the threshold for similarity score
-            threshold = 0.9
+                # Save the processed signature samples for the user
+                for i, signature_sample in enumerate(processed_samples, start=1):
+                    SignatureSample.objects.create(user=user, signature_image=signature_sample)
 
-            # Create a list to hold similarity counts for each reference sample
-            similarity_counts = [0] * len(samples)
+                # Rest of your processing...
 
-            # Calculate similarity scores for each combination of reference and uploaded images
-            for i, ref_sample in enumerate(samples):
-                reference_image = cv2.imread(ref_sample.signature_image.path, cv2.IMREAD_GRAYSCALE)
+                return redirect('home')  # Redirect to home page after successful registration
 
-                for j, signature_sample in enumerate(samples):
-                    uploaded_image_data = signature_sample.signature_image.read()
-                    uploaded_image = cv2.imdecode(np.frombuffer(uploaded_image_data, np.uint8), cv2.IMREAD_GRAYSCALE)
-
-                    similarity_score = ssim(uploaded_image, reference_image)
-
-                    if similarity_score > threshold:
-                        similarity_counts[i] += 1
-
-            # Check if all similarity counts are equal to the number of samples
-            if all(count == len(samples) for count in similarity_counts):
-                # All samples are similar to each other
-                # Perform further processing or encryption
-
-                # Check if this is the first time the user logs in from this device
-                device_ip = request.META.get('REMOTE_ADDR')
-                first_login = not user.device_ip or user.device_ip != device_ip
-                user.device_ip = device_ip
-                user.save()
-
-                # Redirect the user to the home page after successful registration
-                return redirect('home')
-            else:
-                # Uploaded samples are not similar to each other
-                # Delete all the uploaded samples and return an error message
-                user.signaturesample_set.all().delete()
-                return JsonResponse({'error': 'The uploaded samples are not similar to each other'}, status=400)
+            except Exception as e:
+                return JsonResponse({'error': f'Error processing images: {str(e)}'}, status=500)
 
     return render(request, 'registration.html')
+
 
 
 # Django imports
@@ -198,23 +190,103 @@ from django.shortcuts import render
 # User login view
 @api_view(['GET', 'POST'])
 @csrf_exempt
+
 def user_login(request):
     if request.method == 'POST':
         user_id = request.data.get('user_id')
         signature_image = request.FILES.get('signature_image')
 
-        # Authenticate the user based on user_id and signature
-        user = authenticate(request, user_id=user_id, signature_image=signature_image)
+        try:
+            # Authenticate the user based on user_id
+            user = User.objects.get(user_id=user_id)
 
-        if user is not None:
-            login(request, user)
-            return JsonResponse({'message': 'Login successful'})
-        else:
-            return JsonResponse({'error': 'Invalid user_id or signature'}, status=400)
+            # Retrieve the user's registered signature sample
+            registered_signature_sample = SignatureSample.objects.get(user=user)
 
-    return render(request, 'login.html')  # Render the login form on GET request
+            # Perform a simple similarity comparison (simplified example)
+            similarity_score = calculate_similarity(signature_image, registered_signature_sample.signature_image)
+
+            # You might define a threshold for similarity and adjust as needed
+            similarity_threshold = 0.7
+
+            if similarity_score >= similarity_threshold:
+                login(request, user)
+                print(similarity_score)
+                return JsonResponse({'message': 'Login successful'})
+            else:
+                return JsonResponse({'error': 'Invalid user_id or signature'}, status=400)
+
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User does not exist'}, status=400)
+        except SignatureSample.DoesNotExist:
+            return JsonResponse({'error': 'User signature not found'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': f'An error occurred: {str(e)}'}, status=500)
+
+    return render(request, 'login.html')
+
+
+
+from skimage.metrics import structural_similarity as ssim
+from PIL import Image
+import numpy as np
+
+def calculate_similarity(signature_image1, signature_image2):
+    try:
+        # Load the images
+        img1 = Image.open(signature_image1)
+        img2 = Image.open(signature_image2)
+
+        # Get dimensions of the images
+        width1, height1 = img1.size
+        width2, height2 = img2.size
+
+        # Choose target size based on the larger dimensions of the images
+        target_width = max(width1, width2)
+        target_height = max(height1, height2)
+        target_size = (target_width, target_height)
+
+        # Resize images to the chosen target size
+        img1_resized = img1.resize(target_size)
+        img2_resized = img2.resize(target_size)
+
+        # Convert resized images to grayscale and numpy arrays
+        img1_gray = np.array(img1_resized.convert("L"))
+        img2_gray = np.array(img2_resized.convert("L"))
+
+        # Calculate the Structural Similarity Index (SSI)
+        similarity_score = ssim(img1_gray, img2_gray)
+
+        return similarity_score
+
+    except Exception as e:
+        print(f"Error calculating similarity: {e}")
+        return 0  # Return a default similarity score in case of an error
+
+# Usage example
+signature_similarity = calculate_similarity('path_to_signature1.jpg', 'path_to_signature2.jpg')
+print(f"Similarity score: {signature_similarity}")
+
+
+
+
 
 # Your other view functions...
+def get_all_signature_samples(request):
+    all_signature_samples = SignatureSample.objects.all()
+
+    # Convert queryset to a list of dictionaries
+    signature_samples_list = [
+        {
+            'id': sample.id,
+            'user_id': sample.user.user_id,
+            'signature_image_url': sample.signature_image.url
+        }
+        for sample in all_signature_samples
+    ]
+
+    return JsonResponse({'signature_samples': signature_samples_list})
+
 
 
 # User logout view
@@ -224,4 +296,80 @@ def user_logout(request):
     logout(request)
     return JsonResponse({'message': 'Logout successful'})
 
-# Your existing views
+# Your existing views'''
+
+# signature_auth/views.py
+
+import json
+from django.http import JsonResponse
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from .forms import UserRegistrationForm, SignatureVerificationForm
+from .models import UserProfile
+from scipy.spatial.distance import cosine
+
+def register_user(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        signature_form = SignatureVerificationForm(request.POST, request.FILES)
+
+        if user_form.is_valid() and signature_form.is_valid():
+            # Save user information
+            user = user_form.save()
+            print(user)
+            signature_image = signature_form.cleaned_data['signature_image']
+            UserProfile.objects.create(user=user, signature_image=signature_image)
+
+            return redirect('verify_signature')  # Redirect to login page after successful registration
+    else:
+        user_form = UserRegistrationForm()
+        signature_form = SignatureVerificationForm()
+
+    return render(request, 'registration.html', {'user_form': user_form, 'signature_form': signature_form})
+
+@login_required
+def verify_signature(request):
+    if request.method == 'POST':
+        form = SignatureVerificationForm(request.POST, request.FILES)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            user_signature = form.cleaned_data['signature_image']
+            
+            # Authenticate the user based on the provided username
+            user = authenticate(username=username)
+            
+            if user and user == request.user:
+                try:
+                    # Get the user's stored signature
+                    stored_signature = UserProfile.objects.get(user=user).signature_image
+                    # Perform signature verification (using the logic you provided)
+                    similarity = calculate_signature_similarity(user_signature, stored_signature)
+                    # Set a threshold for similarity
+                    threshold = 0.9
+                    if similarity > threshold:
+                        # Successful signature verification
+                        # Redirect to the original website (replace 'original_website_url' with the actual URL)
+                        # return redirect('signatures/home.html')
+                        return JsonResponse({'message': 'Login successful'})
+                    else:
+                        # Failed verification
+                        return render(request, 'verification_failed.html')
+                except UserProfile.DoesNotExist:
+                    # UserProfile for the user does not exist
+                    return render(request, 'user_profile_not_found.html')
+            else:
+                # Invalid username
+                return JsonResponse({'message': 'Invalid username'})
+    else:
+        form = SignatureVerificationForm()
+
+    return render(request, 'login.html', {'form': form})
+
+def calculate_signature_similarity(signature1, signature2):
+    # Implement the signature similarity calculation logic
+    # Example: Use the code you provided for calculating feature vectors and distances
+    # Make sure to properly handle image processing, feature extraction, and similarity calculations
+    # Return a similarity score
+    return 1

@@ -7,22 +7,9 @@
     <h2>User Registration</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="user_id">User ID:</label>
-        <input type="text" name="user_id" required><br><br>
-        
-        <label for="signature_sample">Upload 10 Signature Samples:</label><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br>
-        <input type="file" name="signature_sample" accept="image/*" required><br><br>
-        
-        <input type="submit" value="Register">
+        {{ user_form.as_p }}
+        {{ signature_form.as_p }}
+        <button type="submit">Register</button>
     </form>
 </body>
 </html>

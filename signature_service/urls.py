@@ -21,16 +21,31 @@ from django.conf.urls.static import static
 
 
 
-from django.urls import path
-from signatures import views
+# SignatureAuth/urls.py
+
+'''from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-    path('', views.home, name='home'),  # Add this line for the root URL
-    path('login/', views.user_login, name='login'),
-    path('logout/', views.user_logout, name='logout'),
+    path('admin/', admin.site.urls),
+    path('signature/', include('signatures.urls')),
+    # Add more paths as needed
+]'''
+
+
+from django.urls import path
+from signatures import views
+from django.contrib import admin
+
+urlpatterns = [
+    path('', views.register_user, name='home'),  # Add this line for the root URL
+    #path('login/', views.user_login, name='login'),
+    #path('logout/', views.user_logout, name='logout'),
     path('verify_signature/', views.verify_signature, name='verify_signature'),
-    path('encrypt_signature/', views.encrypt_signature, name='encrypt_signature'),
-    path('register/', views.user_registration, name='register'),
+    #path('encrypt_signature/', views.encrypt_signature, name='encrypt_signature'),
+    path('register/', views.register_user, name='register'),
+    #path('all-signature-samples/', views.get_all_signature_samples, name='get_all_signature_samples'),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
