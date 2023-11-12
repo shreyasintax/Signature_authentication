@@ -14,9 +14,39 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
+# In signature_service/urls.py
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
+# SignatureAuth/urls.py
+
+'''from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('signature/', include('signatures.urls')),
+    # Add more paths as needed
+]'''
+
+
+from django.urls import path
+from signatures import views
+from django.contrib import admin
+
+urlpatterns = [
+    path('', views.register_user, name='home'),  # Add this line for the root URL
+    #path('login/', views.user_login, name='login'),
+    #path('logout/', views.user_logout, name='logout'),
+    path('verify_signature/', views.verify_signature, name='verify_signature'),
+    #path('encrypt_signature/', views.encrypt_signature, name='encrypt_signature'),
+    path('register/', views.register_user, name='register'),
+    #path('all-signature-samples/', views.get_all_signature_samples, name='get_all_signature_samples'),
+    path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
