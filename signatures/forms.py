@@ -10,7 +10,10 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password', 'email']
+    
+    signature_image = forms.ImageField()
 
 class SignatureVerificationForm(forms.Form):
+    username = forms.CharField(label="Username:",max_length=100)
     signature_image = forms.ImageField()
 
