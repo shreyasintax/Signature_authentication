@@ -17,8 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'itsmeudita777@gmail.com'
-EMAIL_HOST_PASSWORD = 'safesign10'
+EMAIL_HOST_USER = 'safesign67@gmail.com'
+EMAIL_HOST_PASSWORD = 'coding@26'
 EMAIL_PORT = 587
 
 
