@@ -1,0 +1,266 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+img {
+    max-width: 100%;
+}
+
+.container {
+    max-width: 1115px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+img {
+    max-width: 100%;
+}
+
+.container {
+    max-width: 1115px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Header menu styles */
+.header_menu {
+    background: linear-gradient(to right, #000000, #0083B0);
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.header_menu .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    width: 80px;
+    height: auto;
+}
+
+.main_menu ul {
+    list-style: none;
+}
+
+.main_menu li {
+    display: inline-block;
+}
+
+.main_menu a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    margin-left: 35px;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.main_menu a:hover {
+    border-bottom: 1px solid #fff;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+}
+
+/* Add your existing CSS styles for header and footer here */
+
+/* Login Page CSS */
+.login-page {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.login-page h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.form-group button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #000;
+    padding: 70px 10px; /* Add the 'px' unit here */
+    color: #fff;
+}
+
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer_logo img {
+    width: 80px;
+    height: auto;
+}
+
+.footer_menu ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer_media ul {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.footer_media ul li {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.footer_media ul li a img {
+    transform: scale(1);
+    transition: 0.3s;
+}
+
+.footer_media ul li a:hover img {
+    transform: scale(1.2);
+}
+
+.copyright p {
+    color: #fff;
+    opacity: 0.5;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .container {
+        max-width: 720px;
+    }
+
+    .footer_menu ul li a {
+        margin-right: 20px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .header_menu {
+        width: -webkit-fill-available;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .signup-form .container {
+        padding: 20px;
+    }
+}
+/*CSS to style the dropdown */
+.login-dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.login-dropdown .dropdown-content a {
+    color: #000;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.login-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Style the dropdown icon */
+.dropdown-icon {
+    font-size: 12px;
+    margin-left: 5px;
+}

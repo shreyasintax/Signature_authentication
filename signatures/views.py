@@ -114,3 +114,12 @@ def verify_signature(request):
         form = SignatureVerificationForm()
 
     return render(request, 'login.html', {'form': form})
+
+def home(request):
+    return render(request, 'home.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+def clientsite(request):
+    return render(request, 'clientsite.html')

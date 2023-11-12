@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About SafeSign</title>
+    <!-- Add your CSS file here -->
+    <link rel="stylesheet" href="{% static 'LogIn_sign.css' %}">
+    <style>
+        /* Add your CSS styles for the About content here */
+        .about-page {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .about-page h1 {
+            font-size: 24px;
+            color: #0083B0;
+            margin-bottom: 20px;
+        }
+
+        .about-page p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .contributors-heading {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0083B0;
+        }
+
+        .contributor-name {
+            font-weight: 600;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header menu -->
+    <section class="header_menu">
+        <div class="container">
+            <div class="header_wrapper">
+                <div class="logo">
+                    <a href="#">
+                        <img src="{% static 'images/logo.svg' %}" alt="">
+                    </a>
+                </div>
+                <div class="main_menu">
+                    <nav>
+                        <ul>
+                            <li><a href="{% url 'about' %}">About</a></li>
+                            <li class="login-dropdown">
+                                <a href="#">Login<span class="dropdown-icon">&#9660;</span></a>
+                                <div class="dropdown-content">
+                                    <a href="{% url 'verify_signature' %}">With Password</a>
+                                    <a href="{% url 'verify_signature' %}">With Signature</a>
+                                </div>
+                            </li>
+                            <li><a href="{% url 'register' %}">SignIn</a></li>
+                        </ul>
+                        <!-- mobile menu -->
+                        <div class="hamburger">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-page">
+        <div class="container">
+            <h1>About SafeSign</h1>
+            <p>
+                SafeSign is a leading platform that focuses on providing secure and convenient authentication solutions. Our mission is to make the digital world safer for everyone. We offer a variety of authentication methods, including username and signature, to ensure the highest level of security for your data and transactions.
+            </p>
+            <p>
+                At SafeSign, we are committed to innovation and user-centric design. We continuously improve our services to adapt to the evolving security landscape. Our team of experts works tirelessly to develop cutting-edge technologies that protect your information and privacy.
+            </p>
+            <p>
+                We believe in transparency and user empowerment. SafeSign provides you with the tools and knowledge to take control of your digital security. With our user-friendly interfaces and top-notch customer support, you're in safe hands.
+            </p>
+
+            <h2 class="contributors-heading">Contributors to SafeSign:</h2>
+            <p class="contributor-name">Aastha Deshwal</p>
+            <p class="contributor-name">Udita Saini</p>
+            <p class="contributor-name">Shreya Sinha</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <div class="container footer_flex">
+            <div class="footer_left">
+                <div class="footer_logo">
+                    <img src="{% static 'images/logo.svg' %}" alt="">
+                </div>
+                <div class="footer_menu">
+                    <ul>
+                        <li><a>Made with ❤️ by SafeSign</a></li><br><br>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer_right">
+                <div class="copyright">
+                    <p>&copy; {% now "Y" %} SafeSign. All rights reserved.</p>
+                    <a href="https://policies.google.com/privacy?hl=en-US" target="_blank">
+                      Terms of Service
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

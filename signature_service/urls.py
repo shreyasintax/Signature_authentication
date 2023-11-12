@@ -38,8 +38,8 @@ from signatures import views
 from django.contrib import admin
 
 urlpatterns = [
-    path('', views.register_user, name='home'),  # Add this line for the root URL
-    #path('login/', views.user_login, name='login'),
+    path('', views.home, name='home'),  # Add this line for the root URL
+    path('about/', views.about, name='about'),
     #path('logout/', views.user_logout, name='logout'),
     path('verify_signature/', views.verify_signature, name='verify_signature'),
     #path('encrypt_signature/', views.encrypt_signature, name='encrypt_signature'),

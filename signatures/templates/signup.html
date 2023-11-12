@@ -1,0 +1,181 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'signupstyles.css' %}">
+    <style>
+        /* CSS for the drawpad container */
+        #drawpad-container {
+            display: none;
+            margin: 20px auto;
+            border: 2px solid #000;
+            overflow: hidden; /* Ensure the canvas stays within the container */
+        }
+
+        /* CSS for the drawCanvas */
+        #drawCanvas {
+            width: 100%; /* Make the canvas width 100% of the container */
+            height: 100%; /* Make the canvas height 100% of the container */
+            cursor: crosshair; /* Set cursor to crosshair for drawing */
+        }
+    </style>
+</head>
+<body>
+    <section class="header_menu">
+        <div class="container">
+            <!-- ... (unchanged) ... -->
+        </div>
+    </section>
+
+    <section class="signup-form">
+        <div class="container">
+            <h2>Signup</h2>
+            <form id="signupForm" onsubmit="return signUpUser()" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+                <label for="signatureOption">Signature Option</label>
+                <select id="signatureOption" name="signatureOption" onchange="toggleSignatureInput()">
+                    <option value="upload">Upload Signature</option>
+                    <option value="drawpad">Use Drawpad</option>
+                </select>
+
+                <div id="signatureUpload">
+                    <label for="signatureFile">Signature (Upload)</label>
+                    <input type="file" id="signatureFile" name="signatureFile" accept=".jpg, .jpeg, .png" required>
+                </div>
+
+                <div id="drawpad-container">
+                    <canvas id="drawCanvas" onclick="startDrawing(event)" onmousemove="draw(event)" onmouseup="stopDrawing()"></canvas>
+                    <button type="button" onclick="clearDraw()">Clear All</button>
+                </div>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="footer">
+        <div class="container footer_flex">
+            <!-- ... (unchanged) ... -->
+        </div>
+    </section>
+
+    <script>
+        var isDrawing = false;
+        var canvas;
+    
+        function toggleSignatureInput() {
+            var signatureOption = document.getElementById("signatureOption").value;
+            var signatureUpload = document.getElementById("signatureUpload");
+            var drawpadContainer = document.getElementById("drawpad-container");
+    
+            if (signatureOption === "upload") {
+                signatureUpload.style.display = "block";
+                drawpadContainer.style.display = "none";
+            } else if (signatureOption === "drawpad") {
+                signatureUpload.style.display = "none";
+                drawpadContainer.style.display = "block";
+    
+                canvas = document.getElementById('drawCanvas');
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+    
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('touchstart', startDrawingTouch);
+    
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('touchmove', drawTouch);
+    
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('touchend', stopDrawing);
+                canvas.addEventListener('contextmenu', function (event) {
+                    event.preventDefault(); // Prevent default right-click behavior
+                });
+            }
+        }
+    
+        function startDrawing(event) {
+            if (event.button === 2 || event.buttons === 1) { // Check if the right mouse button is pressed or left mouse button for laptops
+                isDrawing = true;
+                var ctx = canvas.getContext('2d');
+                ctx.beginPath();
+                ctx.moveTo(event.clientX - canvas.getBoundingClientRect().left, event.clientY - canvas.getBoundingClientRect().top);
+            }
+        }
+    
+        function startDrawingTouch(event) {
+            isDrawing = true;
+            var ctx = canvas.getContext('2d');
+            var touch = event.touches[0];
+            ctx.beginPath();
+            ctx.moveTo(touch.clientX - canvas.getBoundingClientRect().left, touch.clientY - canvas.getBoundingClientRect().top);
+        }
+    
+        function draw(event) {
+            if (isDrawing) {
+                var ctx = canvas.getContext('2d');
+                ctx.lineTo(event.clientX - canvas.getBoundingClientRect().left, event.clientY - canvas.getBoundingClientRect().top);
+                ctx.stroke();
+            }
+        }
+    
+        function drawTouch(event) {
+            if (isDrawing) {
+                var ctx = canvas.getContext('2d');
+                var touch = event.touches[0];
+                ctx.lineTo(touch.clientX - canvas.getBoundingClientRect().left, touch.clientY - canvas.getBoundingClientRect().top);
+                ctx.stroke();
+            }
+        }
+    
+        function stopDrawing() {
+            isDrawing = false;
+        }
+    
+        function clearDraw() {
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+        }
+    
+        function signUpUser() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var signatureOption = document.getElementById("signatureOption").value;
+    
+            if (signatureOption === "upload") {
+                var signatureFile = document.getElementById("signatureFile").files[0];
+    
+                if (!signatureFile) {
+                    alert("Please upload a signature image.");
+                    return false;
+                }
+                // Handle uploaded signature file
+            } else if (signatureOption === "drawpad") {
+                // Handle drawn signature from the drawpad
+                // Retrieve the drawn signature from the canvas (e.g., canvas.toDataURL())
+            }
+    
+            if (username && password) {
+                window.location.href = "{% url 'clientsite' %}";
+            } else {
+                alert("Signup failed. Please fill in all required fields.");
+            }
+    
+            return false;
+        }
+    </script>
+</body>
+</html>

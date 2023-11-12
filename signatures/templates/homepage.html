@@ -31,11 +31,11 @@
                         <li class="login-dropdown">
                             <a href="#">Login<span class="dropdown-icon">&#9660;</span></a>
                             <div class="dropdown-content">
-                                <a href="{% url 'verify_signature' %}">With Password</a>
-                                <a href="{% url 'verify_signature' %}">With Signature</a>
+                                <a href="{% url 'signin_pass' %}">With Password</a>
+                                <a href="{% url 'signin_sign' %}">With Signature</a>
                             </div>
                         </li>
-                        <li><a href="{% url 'register' %}">SignIn</a></li>
+                        <li><a href="{% url 'signup' %}">SignIn</a></li>
                     </ul>
                       <!-- mobile menu -->
                       <div class="hamburger">
@@ -82,7 +82,7 @@
                     <ul>
                         <li><a>Made with ❤️ by SafeSign</a></li><br><br>
                         <li><a href="{% url 'about' %}">About</a></li>
-                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'homepage' %}">Home</a></li>
                     </ul>
                 </div>
             </div>

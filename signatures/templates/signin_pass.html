@@ -1,0 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeSign Login</title>
+    <link rel="stylesheet" href="{% static 'LogIn_sign.css' %}">
+</head>
+<body>
+    <section class="header_menu">
+        <div class="container">
+            <div class="header_wrapper">
+                <div class="logo">
+                    <a href="#">
+                        <img src="{% static 'images/logo.svg' %}" alt="">
+                    </a>
+                </div>
+                <div class="main_menu">
+                    <nav>
+                        <ul>
+                            <li><a href="{% url 'about' %}">About</a></li>
+                            <li class="login-dropdown">
+                                <a href="#">Login<span class="dropdown-icon">&#9660;</span></a>
+                                <div class="dropdown-content">
+                                    <a href="{% url 'signin_pass' %}">With Password</a>
+                                    <a href="{% url 'signin_sign' %}">With Signature</a>
+                                </div>
+                            </li>
+                            <li><a href="{% url 'signup' %}">SignIn</a></li>
+                        </ul>
+                        <div class="hamburger">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="login-page">
+        <div class="container">
+            <h1>Login</h1>
+            <form method="post" onsubmit="return loginUser()">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="footer">
+        <div class="container footer_flex">
+            <div class="footer_left">
+                <div class="footer_logo">
+                    <img src="{% static 'images/logo.svg' %}" alt="">
+                </div>
+                <div class="footer_menu">
+                    <ul>
+                        <li><a>Made with ❤️ by SafeSign</a></li><br><br>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'homepage' %}">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer_right">
+                <div class="copyright">
+                    <p>&copy; {% now "Y" %} SafeSign. All rights reserved.</p>
+                    <a href="https://policies.google.com/privacy?hl=en-US" target="_blank">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function loginUser() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+    
+            if (username === "demo" && password === "demo123") {
+                window.location.href = "{% url 'clientsite' %}";
+            } else {
+                alert("Invalid username or password");
+            }
+    
+            return false;
+        }
+    </script>
+</body>
+</html>

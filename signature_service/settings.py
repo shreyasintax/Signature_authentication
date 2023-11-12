@@ -65,6 +65,7 @@ DATABASES = {
 
 # Static files (CSS, JavaScript, images)
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Media files (user-uploaded content)
 MEDIA_URL = '/media/'

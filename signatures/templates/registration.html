@@ -1,14 +1,97 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Registration</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'signupstyles.css' %}">
+    <style>
+        /* CSS for the drawpad container */
+        #drawpad-container {
+            display: none;
+            margin: 20px auto;
+            border: 2px solid #000;
+            overflow: hidden; /* Ensure the canvas stays within the container */
+        }
+
+        /* CSS for the drawCanvas */
+        #drawCanvas {
+            width: 100%; /* Make the canvas width 100% of the container */
+            height: 100%; /* Make the canvas height 100% of the container */
+            cursor: crosshair; /* Set cursor to crosshair for drawing */
+        }
+    </style>
 </head>
 <body>
+        <!-- Header menu -->
+        <section class="header_menu">
+            <div class="container">
+                <div class="header_wrapper">
+                    <div class="logo">
+                        <a href="#">
+                            <img src="{% static 'images/logo.svg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="main_menu">
+                        <nav>
+                            <ul>
+                                <li><a href="{% url 'about' %}">About</a></li>
+                                <li class="login-dropdown">
+                                    <a href="#">Login<span class="dropdown-icon">&#9660;</span></a>
+                                    <div class="dropdown-content">
+                                        <a href="{% url 'verify_signature' %}">With Password</a>
+                                        <a href="{% url 'verify_signature' %}">With Signature</a>
+                                    </div>
+                                </li>
+                                <li><a href="{% url 'register' %}">SignIn</a></li>
+                            </ul>
+                            <!-- mobile menu -->
+                            <div class="hamburger">
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+    <section class="signup-form">
+        <div class="container">
     <h2>User Registration</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ user_form.as_p }}
         <button type="submit">Register</button>
     </form>
+    </div>
+    </section>
+    <!-- Footer -->
+   <section class="footer">
+    <div class="container footer_flex">
+        <div class="footer_left">
+            <div class="footer_logo">
+                <img src="{% static 'images/logo.svg' %}" alt="">
+            </div>
+            <div class="footer_menu">
+                <ul>
+                    <li><a>Made with ❤️ by SafeSign</a></li><br><br>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    <div class="footer_right">
+        <div class="copyright">
+            <p>&copy; {% now "Y" %} SafeSign. All rights reserved.</p><br>
+            <a href="https://policies.google.com/privacy?hl=en-US" target="_blank">
+              Terms of Service
+            </a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
