@@ -101,7 +101,7 @@ def verify_signature(request):
                 if similarity > threshold:
                     # Successful signature verification
                     # Redirect to the original website or return a JsonResponse as needed
-                    return JsonResponse({'message': 'Login successful'})
+                    return render(request, 'clientsite.html')
                 else:
                     # Failed verification
                     return render(request, 'verification_failed.html')
