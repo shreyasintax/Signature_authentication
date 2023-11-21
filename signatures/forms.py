@@ -12,6 +12,10 @@ class UserRegistrationForm(forms.ModelForm):
         fields = ['username', 'password', 'email']
     
     signature_image = forms.ImageField()
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True  # Make the email field required
+
 
 class SignatureVerificationForm(forms.Form):
     username = forms.CharField(label="Username:",max_length=100)

@@ -8,6 +8,10 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .forms import UserRegistrationForm, SignatureVerificationForm
 from .models import UserProfile
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Load VGG16 model for signature similarity calculation
 vgg16 = keras.applications.VGG16(weights='imagenet', include_top=True, pooling='max', input_shape=(224, 224, 3))
@@ -70,7 +74,15 @@ def register_user(request):
             # Save user information
             user = user_form.save()
             signature_image = user_form.cleaned_data['signature_image']
+            username = user_form.cleaned_data['username']
+            email = user.email
             UserProfile.objects.create(user=user, signature_image=signature_image)
+            messages.success(request, 'Your account has been created successfully')
+            subject = "Welcome to SafeSign Login - You have signed up"
+            message = f"Hello {username},\nYou have successfully signed up. Please confirm your email address in order to activate your account.\nThank you"
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [email]
+            send_mail(subject, message, from_email, to_email, fail_silently=True)
 
             return redirect('verify_signature')  # Redirect to login page after successful registration
     else:

@@ -1,14 +1,23 @@
 # SignatureAuth/settings.py
 
 import os
+from pathlib import Path
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'safesign67@gmail.com'
+EMAIL_HOST_PASSWORD = 'coding@26'
+EMAIL_PORT = 587
+
+
 SECRET_KEY = 'django-insecure-besug)wy0woh5_2nb6_fz420qgzdr2b2=r9c6kb74g8e+oug30'  # Change this to a secure, random key in production!
+
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']  # Update this with your production domain(s) when deploying.
+ALLOWED_HOSTS = ['safesign.com', '127.0.0.1'] # Update this with your production domain(s) when deploying.
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -28,6 +37,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 ROOT_URLCONF = 'signature_service.urls'
@@ -58,14 +71,42 @@ DATABASES = {
 }
 
 # Password validation
-# ...
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 # Internationalization
-# ...
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_TZ = True
+
 
 # Static files (CSS, JavaScript, images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media files (user-uploaded content)
 MEDIA_URL = '/media/'
