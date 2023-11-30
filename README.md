@@ -6,4 +6,3 @@
 1. Udita Saini
 2. Shreya Sinha
 3. Aastha deshwal
-4. Abhisatwika reddy
